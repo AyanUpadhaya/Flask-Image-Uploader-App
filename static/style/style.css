@@ -1,0 +1,35 @@
+.image-preview{
+    width:400px;
+    min-height:200px;
+    border: 2px solid #a58d8d;
+    margin-top: 15px;
+    background-color: rgb(234, 240, 240);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: rgb(73, 58, 58);
+}
+.image-continer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.image-preview__image{
+    display: none;
+    width: 50%;
+}
+#notification{
+    display: none;
+}
+.notification-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+td{
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+}

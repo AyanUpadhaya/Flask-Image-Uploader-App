@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+<!-- page title -->
+{% block title %}
+
+{% if title: %}
+<title>{{title}}</title>
+
+{% else %}
+<title>Flask App</title> 
+{% endif %}
+
+{% endblock %}
+<!-- style block -->
+
+<!-- page body -->
+{% block content %}
+<div class="jumbotron text-center">
+	<h1>Flask Image Uploader</h1>
+	<p>An image uploading application</p>
+
+	<div class="custom-file col-6">
+		<form action="/" method="POST" enctype="multipart/form-data">
+			<input type="file" class="custom-file-input" name="image" id="image">
+			<label class="custom-file-label" for="image" id="customFile">Choose File</label>
+			<button type="submit" class="btn btn-primary mt-2">File Upload</button>
+			<!-- <button type="button" class="btn btn-secondary mt-2">Gallery</button> -->
+			<a href="/gallery.html" class="btn btn-secondary mt-2">Gallery</a>
+		</form>		
+	</div>
+</div>
+<!-- preview image -->
+{% block image %}
+<div class="image-continer">
+	<div class ="image-preview" id ="imagePreview">
+		<img src="" alt ="Image preview" class="image-preview__image">
+		<span class="image-preview__default-text">Image Preview</span>
+	</div>
+</div>
+{% endblock %}
+<!-- notification -->
+
+<div class="notification-box">
+	<p id="notification"></p>
+</div>
+{% endblock %}
+
+
+{% block script %}
+
+<!-- image preview script -->
+<script>
+	const imgFile = document.getElementById('image');
+	const previewContiner = document.getElementById('imagePreview');
+	const previewImage =  previewContiner.querySelector('.image-preview__image');
+	const previewDefaultText =  previewContiner.querySelector('.image-preview__default-text');
+	const allowedfileFormats = ["JPG","JPEG","PNG","GIF"];
+	const notification = document.getElementById('notification');
+
+	imgFile.addEventListener('change',function(){
+		const file = this.files[0];
+		let ext;
+
+		if(file!=undefined){
+			ext = file.name.split('.')[1];
+		}
+		
+
+		
+		if (file!==undefined){
+			if(allowedfileFormats.includes(ext.toUpperCase())){
+				const reader = new FileReader();
+				previewDefaultText.style.display =  "none";
+				previewImage.style.display = "block";
+
+				reader.addEventListener('load',function(){
+					previewImage.setAttribute('src',this.result);
+				});
+				notification.innerText= file.name;
+				notification.style.display="block";
+				reader.readAsDataURL(file);
+			}else{
+				previewImage.style.display="none";
+				previewDefaultText.style.display="block";
+				notification.style.display="none";
+			}
+		}else{
+				previewImage.style.display="none";
+				previewDefaultText.style.display="block";
+				notification.style.display="none";
+		}
+			
+	});
+</script>
+{% endblock %}
